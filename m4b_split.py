@@ -56,3 +56,6 @@ for chapter in chapters:
     audio = ffmpeg.input(m4b,ss=chapter.get("start_time"),to=chapter.get("end_time")).audio
     output = ffmpeg.output(audio,new_path,acodec='copy',map_chapters="-1")
     output.run(quiet=True)
+
+
+log(author+" "+book+" -> Success")
