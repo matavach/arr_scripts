@@ -4,6 +4,11 @@ import sys
 import os
 import ffmpeg
 
+if "readarr_eventtype" in os.environ :
+    if os.environ["readarr_eventtype"] == "Test" :
+        print(os.environ["readarr_eventtype"])
+        exit()
+
 def error_print(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
@@ -59,3 +64,5 @@ for chapter in chapters:
 
 
 log(author+" "+book+" -> Success")
+
+os.remove(m4b)
