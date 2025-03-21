@@ -58,7 +58,6 @@ class BookWatch(FileSystemEventHandler):
                 sleep(1) # WAITING FOR FILE TRANSFER
                 continue
         
-        self.process(event)
         print(file)
         result = subprocess.run(["/root/go/bin/kindle-send", "-config /config/scripts/KindleConfig.json", "-file {file.name}"], capture_output=True, text=True)
         print(result)
@@ -69,7 +68,7 @@ class BookWatch(FileSystemEventHandler):
         
 
 event_handler = BookWatch()
-obs = PollingObserver()
+obs = PollingObserverObserver()
 
 obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
 obs.start()
