@@ -60,7 +60,9 @@ class BookWatch(FileSystemEventHandler):
                 continue
         
         self.process(event)
+        print(file)
         result = subprocess.run(["/root/go/bin/kindle-send", "-config /config/scripts/KindleConfig.json", "-file {file.name}"], capture_output=True, text=True)
+        print(result)
         log_text.append(result)
         global Done 
         Done = True
@@ -73,8 +75,11 @@ obs = Observer()
 obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
 obs.start()
 
+print("starting observer")
+
 try:
     while not Done:
+        print("while loop")
         obs.join()
 finally:
     obs.stop()
