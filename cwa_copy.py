@@ -4,7 +4,7 @@ import sys
 import os
 import shutil
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
-from watchdog.observers import Observer
+from watchdog.observers.polling import PollingObserver
 import subprocess
 Done = False
 
@@ -43,9 +43,7 @@ def log(text):
 
 class BookWatch(FileSystemEventHandler):
     patterns = [".epub"]
-    def process(self, event):
         
-        log_text.append('{} observed on {}'.format(event.event_type, event.src_path))
     def on_created(self, event):
         print("in")
         self._is_paused = True
@@ -71,7 +69,7 @@ class BookWatch(FileSystemEventHandler):
         
 
 event_handler = BookWatch()
-obs = Observer()
+obs = PollingObserver()
 
 obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
 obs.start()
