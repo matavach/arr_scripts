@@ -22,23 +22,23 @@ def log(text):
     with open(logfile, "w",encoding="utf-8") as bookfile :
         bookfile.write(text)
 
-# # Use readarr vars if ran by readarr, otherwise use args
-# if "readarr_author_name" in os.environ :
-#     author = os.environ["readarr_author_name"]
-#     book = os.environ["readarr_book_title"]
-#     path = os.environ["readarr_author_path"] + "/" + book
-# else:
-#     path = sys.argv[1]
-#     author = path.split("/")[-2]
-#     book = path.split("/")[-1]
+# Use readarr vars if ran by readarr, otherwise use args
+if "readarr_author_name" in os.environ :
+    author = os.environ["readarr_author_name"]
+    book = os.environ["readarr_book_title"]
+    path = os.environ["readarr_author_path"] + "/" + book
+else:
+    path = sys.argv[1]
+    author = path.split("/")[-2]
+    book = path.split("/")[-1]
 
 
-# files = os.scandir(path)
+files = os.scandir(path)
 
-# for file in files:
-#     shutil.copy(file.path, "/transcode/cwa")
+for file in files:
+    shutil.copy(file.path, "/transcode/cwa")
 
-# log_text.append(author + " - " + book + " successfully copied to 'Calibre ingest' folder")
+log_text.append(author + " - " + book + " successfully copied to 'Calibre ingest' folder")
 
 file_name = ""
 
