@@ -60,27 +60,24 @@ class BookWatch(FileSystemEventHandler):
                 continue
         global file_name
         file_name = file.name
-        
-        
-        global Done 
-        Done = True
-        self._is_paused = False
-        
+        self.observer.stop() 
 
 event_handler = BookWatch()
 obs = PollingObserver()
 
 obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
+event_handler.observer = obs
 obs.start()
 
 print("starting observer")
 
 try:
-    while not Done:
+    while obs.is_alive():
         print("while loop")
         obs.join()
 finally:
     obs.stop()
+    obs.join()
 
 
 result = subprocess.run(["/root/go/bin/kindle-send", "-config", "/config/scripts/KindleConfig.json", "-file", f"{file_name}"], capture_output=True, text=True)
