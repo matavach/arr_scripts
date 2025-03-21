@@ -20,7 +20,7 @@ def log(text):
     title = "test"
     logfile = "/config/logs/cwa_copy_"  + time + "_" + title + ".txt"
     with open(logfile, "w",encoding="utf-8") as bookfile :
-        bookfile.write('\n'.join(text))
+        bookfile.write(text)
 
 # # Use readarr vars if ran by readarr, otherwise use args
 # if "readarr_author_name" in os.environ :
