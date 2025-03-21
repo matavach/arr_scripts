@@ -40,6 +40,7 @@ def log(text):
 
 # log_text.append(author + " - " + book + " successfully copied to 'Calibre ingest' folder")
 
+file_name = ""
 
 class BookWatch(FileSystemEventHandler):
     patterns = [".epub"]
@@ -57,11 +58,10 @@ class BookWatch(FileSystemEventHandler):
                 file = None                    
                 sleep(1) # WAITING FOR FILE TRANSFER
                 continue
+        global file_name
+        file_name = file.name
         
-        print(file)
-        result = subprocess.run(["/root/go/bin/kindle-send", "-config", "\"/config/scripts/KindleConfig.json\"", "-file", f"\"{file.name}\""], capture_output=True, text=True)
-        print(result)
-        log_text.append(result)
+        
         global Done 
         Done = True
         self._is_paused = False
@@ -81,5 +81,10 @@ try:
         obs.join()
 finally:
     obs.stop()
+    obs.join()
 
+
+result = subprocess.run(["/root/go/bin/kindle-send", "-config", "\"/config/scripts/KindleConfig.json\"", "-file", f"\"{file_name}\""], capture_output=True, text=True)
+print(result)
+log_text.append(result)
 log(log_text)
