@@ -68,7 +68,7 @@ class BookWatch(FileSystemEventHandler):
         
 
 event_handler = BookWatch()
-obs = PollingObserverObserver()
+obs = PollingObserver()
 
 obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
 obs.start()
