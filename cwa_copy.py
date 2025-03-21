@@ -59,7 +59,7 @@ class BookWatch(FileSystemEventHandler):
                 continue
         
         print(file)
-        result = subprocess.run(["/root/go/bin/kindle-send", "-config /config/scripts/KindleConfig.json", "-file {file.name}"], capture_output=True, text=True)
+        result = subprocess.run(["/root/go/bin/kindle-send", "-config /config/scripts/KindleConfig.json", f"-file {file.name}"], capture_output=True, text=True)
         print(result)
         log_text.append(result)
         global Done 
