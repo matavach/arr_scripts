@@ -70,7 +70,7 @@ class BookWatch(FileSystemEventHandler):
 event_handler = BookWatch()
 obs = Observer()
 
-obs.schedule(event_handler, "/mnt/data/media/books/calibre", recursive=True)
+obs.schedule(event_handler, "/data/media/books/calibre", recursive=True)
 obs.start()
 
 try:
