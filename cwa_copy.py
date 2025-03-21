@@ -47,6 +47,7 @@ class BookWatch(FileSystemEventHandler):
         
         log_text.append('{} observed on {}'.format(event.event_type, event.src_path))
     def on_created(self, event):
+        print("in")
         self._is_paused = True
         
         # WAITING FOR FILE TRANSFER
