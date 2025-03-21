@@ -32,13 +32,16 @@ else:
     author = path.split("/")[-2]
     book = path.split("/")[-1]
 
+log("author: " + author)
+log("book: " + book)
+log("path: " + path )
 
 files = os.scandir(path)
 
 for file in files:
     shutil.copy(file.path, "/transcode/cwa")
 
-log_text.append(author + " - " + book + " successfully copied to 'Calibre ingest' folder")
+log(author + " - " + book + " successfully copied to 'Calibre ingest' folder")
 
 file_name = ""
 
@@ -81,6 +84,4 @@ finally:
 
 
 result = subprocess.run(["/root/go/bin/kindle-send", "-config", "/config/scripts/KindleConfig.json", "-file", f"{file_name}"], capture_output=True, text=True)
-print(result)
-log_text.append(result)
-log(log_text)
+log(result)
