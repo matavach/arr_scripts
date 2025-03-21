@@ -56,7 +56,7 @@ class BookWatch(FileSystemEventHandler):
                 file = open(event.src_path)
             except OSError:
                 file = None                    
-                time.sleep(1) # WAITING FOR FILE TRANSFER
+                sleep(1) # WAITING FOR FILE TRANSFER
                 continue
         
         self.process(event)
