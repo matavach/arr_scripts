@@ -84,7 +84,7 @@ finally:
     obs.join()
 
 
-result = subprocess.run(["/root/go/bin/kindle-send", "-config", "\"/config/scripts/KindleConfig.json\"", "-file", f"\"{file_name}\""], capture_output=True, text=True)
+result = subprocess.run(["/root/go/bin/kindle-send", "-config", "/config/scripts/KindleConfig.json", "-file", f"{file_name}"], capture_output=True, text=True)
 print(result)
 log_text.append(result)
 log(log_text)
