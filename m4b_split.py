@@ -4,6 +4,8 @@ import sys
 import os
 import ffmpeg
 
+readarr = False
+
 if "readarr_eventtype" in os.environ :
     if os.environ["readarr_eventtype"] == "Test" :
         print(os.environ["readarr_eventtype"])
@@ -13,11 +15,14 @@ def error_print(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 def log(text):
-    time = strftime("%Y_%m_%d_%I_%M_%p", localtime())
-    logfile = "/config/logs/m4b_split-" + author + "-" + book + "-" + time + ".txt"
-    with open(logfile, "w",encoding="utf-8") as bookfile :
-        bookfile.write(text)
-    error_print(text)
+    if readarr:
+        time = strftime("%Y_%m_%d_%I_%M_%p", localtime())
+        logfile = "/config/logs/m4b_split-" + author + "-" + book + "-" + time + ".txt"
+        with open(logfile, "w",encoding="utf-8") as bookfile :
+            bookfile.write(text)
+        error_print(text)
+    else:
+        print(text)
 
 
 # Use readarr vars if ran by readarr, otherwise use args
@@ -25,12 +30,19 @@ if "readarr_author_name" in os.environ :
     author = os.environ["readarr_author_name"]
     book = os.environ["readarr_book_title"]
     path = os.environ["readarr_author_path"] + "/" + book
+    readarr = True
 else:
-    path = sys.argv[1]
+    if(len(sys.argv) > 1):
+        if((sys.argv[1]).count("/") > 1):
+            path = sys.argv[1]
+        else:
+            path = os.getcwd() + "/" + sys.argv[1]
+    else:
+        path = os.getcwd()
     author = path.split("/")[-2]
     book = path.split("/")[-1]
 
-
+print(path)
 files = os.scandir(path)
 m4b = []
 for file in files :
@@ -52,7 +64,8 @@ if chapters is None:
     log(book + "has no chapters.")
     exit()
 
-
+print(m4b)
+print(chapters)
 i = 0
 for chapter in chapters:
     i = i + 1
@@ -61,7 +74,6 @@ for chapter in chapters:
     audio = ffmpeg.input(m4b,ss=chapter.get("start_time"),to=chapter.get("end_time")).audio
     output = ffmpeg.output(audio,new_path,acodec='copy',map_chapters="-1")
     output.run(quiet=True)
-
 
 log(author+" "+book+" -> Success")
 

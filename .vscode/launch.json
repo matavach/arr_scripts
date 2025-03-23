@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": "/home/erik"
+            "args": ["~/audiobooks/Andrew Rowe/On the Shoulders of Titans"]
         }
     ]
 }
