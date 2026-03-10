@@ -1,0 +1,13 @@
+[project]
+name = "media-scripts"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "argparse>=1.4.0",
+    "ffmpeg-python>=0.2.0",
+    "future>=1.0.0",
+    "python-qbittorrent>=0.4.3",
+    "watchdog>=6.0.0",
+]
